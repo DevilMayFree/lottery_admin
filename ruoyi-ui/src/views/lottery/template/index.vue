@@ -37,7 +37,7 @@
                 size="mini"
                 type="text"
                 icon="el-icon-edit"
-                @click="handleUpdate(scope.row)"
+                @click="handleDetail(scope.row)"
               >详情
               </el-button>
               <el-button
@@ -118,10 +118,9 @@
 
 <script>
 import {getUser} from "@/api/system/user";
-import {getToken} from "@/utils/auth";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-import {addGoods, delGoods, getGoods, getGoodsByName, updateGoods} from "@/api/lottery/goods";
-import {addTemplate, listTemplate} from "@/api/lottery/template";
+import {getGoodsByName} from "@/api/lottery/goods";
+import {addTemplate, delTemplate, getTemplate, listTemplate, updateTemplate} from "@/api/lottery/template";
 
 export default {
   name: "User",
@@ -321,11 +320,20 @@ export default {
         this.title = "添加中奖模板";
       });
     },
+    handleDetail(row){
+      this.reset();
+      const userId = row.id || this.ids;
+      getTemplate(userId).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "中奖模板详情";
+      })
+    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const userId = row.id || this.ids;
-      getGoods(userId).then(response => {
+      getTemplate(userId).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改模板";
@@ -342,7 +350,7 @@ export default {
     handleDelete(row) {
       const id = row.id || this.ids;
       this.$modal.confirm('是否确认删除模板编号为"' + id + '"的数据项？').then(function () {
-        return delGoods(id);
+        return delTemplate(id);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -378,7 +386,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
-            updateGoods(this.form).then(response => {
+            updateTemplate(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();

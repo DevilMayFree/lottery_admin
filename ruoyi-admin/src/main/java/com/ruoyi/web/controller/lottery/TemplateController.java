@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,21 @@ public class TemplateController extends BaseController {
     public TableDataInfo list(LotteryTemplate template) {
         startPage();
         List<LotteryTemplate> list = lotteryTemplateMapper.selectTemplateList(template);
+
+        /*for (LotteryTemplate lotteryTemplate : list) {
+            List<LotterySetReq> goods = new ArrayList<>();
+            List<LotterySet> lotterySetList = lotterySetMapper.selectSetListByTemplateId(lotteryTemplate.getId());
+
+            for (LotterySet lotterySet : lotterySetList) {
+                String rate = lotterySet.getRate();
+                LotterySetReq req = new LotterySetReq();
+                req.setName(lotterySet.getGoodsName());
+                req.setRate(String.valueOf(Float.parseFloat(rate) / 100));
+                goods.add(req);
+            }
+
+            lotteryTemplate.setGoods(goods);
+        }*/
         return getDataTable(list);
     }
 
@@ -84,6 +100,20 @@ public class TemplateController extends BaseController {
         AjaxResult ajax = AjaxResult.success();
         if (StringUtils.isNotNull(id)) {
             LotteryTemplate lotteryTemplate = lotteryTemplateMapper.selectTemplateById(id);
+
+            List<LotterySetReq> goods = new ArrayList<>();
+            List<LotterySet> lotterySetList = lotterySetMapper.selectSetListByTemplateId(lotteryTemplate.getId());
+
+            for (LotterySet lotterySet : lotterySetList) {
+                String rate = lotterySet.getRate();
+                LotterySetReq req = new LotterySetReq();
+                req.setName(lotterySet.getGoodsName());
+                req.setRate(String.valueOf(Float.parseFloat(rate) / 100));
+                goods.add(req);
+            }
+
+            lotteryTemplate.setGoods(goods);
+
             ajax.put(AjaxResult.DATA_TAG, lotteryTemplate);
         }
         return ajax;
@@ -91,12 +121,17 @@ public class TemplateController extends BaseController {
 
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody LotteryTemplate template) {
-        return toAjax(lotteryTemplateMapper.updateTemplate(template));
+        this.remove(new Long[]{template.getId()});
+        template.setId(null);
+        this.add(template);
+        return AjaxResult.success();
     }
 
     @DeleteMapping("/{id}")
     public AjaxResult remove(@PathVariable Long[] id) {
-        return toAjax(lotteryTemplateMapper.deleteTemplateByIds(id));
+        lotteryTemplateMapper.deleteTemplateByIds(id);
+        lotterySetMapper.deleteSetByIds(id);
+        return AjaxResult.success();
     }
 
 }

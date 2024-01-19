@@ -16,6 +16,8 @@ public class LotterySet extends BaseEntity {
 
     private Long goodsId;
 
+    private String goodsName;
+
     private String rate;
 
     private String status;
@@ -54,6 +56,14 @@ public class LotterySet extends BaseEntity {
         this.goodsId = goodsId;
     }
 
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
     public String getRate() {
         return rate;
     }
@@ -84,6 +94,7 @@ public class LotterySet extends BaseEntity {
                 "id=" + id +
                 ", templateId=" + templateId +
                 ", goodsId=" + goodsId +
+                ", goodsName=" + goodsName +
                 ", rate='" + rate + '\'' +
                 ", status='" + status + '\'' +
                 ", delFlag='" + delFlag + '\'' +
