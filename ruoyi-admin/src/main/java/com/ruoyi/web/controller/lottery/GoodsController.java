@@ -66,6 +66,17 @@ public class GoodsController extends BaseController {
         return ajax;
     }
 
+    /**
+     * 根据name获取详细信息
+     */
+    @PostMapping("/getGoodsByName")
+    public AjaxResult getInfoByName(@RequestBody LotteryGoods goods) {
+        AjaxResult ajax = AjaxResult.success();
+        List<LotteryGoods> list = lotteryGoodsMapper.selectGoodsByName(goods.getName());
+        ajax.put(AjaxResult.DATA_TAG, list);
+        return ajax;
+    }
+
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody LotteryGoods goods) {
         return toAjax(lotteryGoodsMapper.updateGoods(goods));

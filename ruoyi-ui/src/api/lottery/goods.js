@@ -25,6 +25,16 @@ export function getGoods(id) {
     })
 }
 
+export function getGoodsByName(name) {
+  return request({
+    url: '/lottery/goods/getGoodsByName',
+    data: {
+      name:name,
+    },
+    method: 'post'
+  })
+}
+
 export function updateGoods(data) {
     return request({
         url: '/lottery/goods',

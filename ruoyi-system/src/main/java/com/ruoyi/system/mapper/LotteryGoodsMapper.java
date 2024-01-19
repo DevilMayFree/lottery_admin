@@ -12,6 +12,10 @@ public interface LotteryGoodsMapper {
 
     LotteryGoods selectGoodsById(Long id);
 
+    List<LotteryGoods> selectGoodsByName(String name);
+
+    LotteryGoods findGoodsByName(String name);
+
     int updateGoods(LotteryGoods goods);
 
     int deleteGoodsByIds(Long[] ids);
