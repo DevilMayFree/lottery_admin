@@ -131,3 +131,6 @@ xss:
 
 upload:
   path: .\\uploadImg
+share:
+  path: http://localhost:8080/index.html?share=
+

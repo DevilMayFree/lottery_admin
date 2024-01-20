@@ -119,6 +119,17 @@ public class TemplateController extends BaseController {
         return ajax;
     }
 
+    /**
+     * 根据name获取详细信息
+     */
+    @PostMapping("/getTemplatesByName")
+    public AjaxResult getInfoByName(@RequestBody LotteryTemplate template) {
+        AjaxResult ajax = AjaxResult.success();
+        List<LotteryTemplate> list = lotteryTemplateMapper.selectTemplatesByName(template.getName());
+        ajax.put(AjaxResult.DATA_TAG, list);
+        return ajax;
+    }
+
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody LotteryTemplate template) {
         this.remove(new Long[]{template.getId()});

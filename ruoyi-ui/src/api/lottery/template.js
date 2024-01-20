@@ -25,6 +25,16 @@ export function getTemplate(id) {
     })
 }
 
+export function getTemplatesByName(name) {
+  return request({
+    url: '/lottery/template/getTemplatesByName',
+    data: {
+      name:name,
+    },
+    method: 'post'
+  })
+}
+
 export function updateTemplate(data) {
     return request({
         url: '/lottery/template',
