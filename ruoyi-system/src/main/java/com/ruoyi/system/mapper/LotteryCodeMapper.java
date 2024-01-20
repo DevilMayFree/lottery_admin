@@ -8,6 +8,12 @@ import java.util.List;
 public interface LotteryCodeMapper {
     List<LotteryCode> selectCodeList(LotteryCode code);
 
+    LotteryCode findCodeByName(String name);
+
+    int countLottery(String code);
+
+    int updateCountLottery(String code);
+
     int insertCode(LotteryCode code);
 
     int actionCodeDone(@Param("id") Long id, @Param("status") Integer status);

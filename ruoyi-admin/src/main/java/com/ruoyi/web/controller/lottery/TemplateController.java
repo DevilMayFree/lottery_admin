@@ -75,7 +75,7 @@ public class TemplateController extends BaseController {
         List<LotterySetReq> goods = template.getGoods();
         for (LotterySetReq good : goods) {
             String name = good.getName();
-            String rate = String.valueOf(Float.parseFloat(good.getRate()) * 100);
+            String rate = String.valueOf(good.getRate());
             LotteryGoods lotteryGoods = lotteryGoodsMapper.findGoodsByName(name);
 
             if (lotteryGoods == null) {

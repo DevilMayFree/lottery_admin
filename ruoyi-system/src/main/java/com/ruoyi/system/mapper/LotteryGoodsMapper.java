@@ -8,6 +8,10 @@ import java.util.List;
 public interface LotteryGoodsMapper {
     List<LotteryGoods> selectGoodsList(LotteryGoods goods);
 
+    List<LotteryGoods> findGoodsInfoByCode(String code);
+
+    List<LotteryGoods> findGoodsInfoAndRateByCode(String code);
+
     int insertGoods(LotteryGoods goods);
 
     LotteryGoods selectGoodsById(Long id);

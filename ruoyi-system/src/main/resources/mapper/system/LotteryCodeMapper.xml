@@ -28,6 +28,25 @@
         </if>
     </select>
 
+    <select id="findCodeByName" parameterType="String" resultMap="LotteryCodeResult">
+        select * from lottery_code u
+        where u.del_flag = '0' AND u.status = 0
+          AND u.code = #{code} limit 1
+    </select>
+
+    <select id="countLottery" parameterType="String">
+        select b.count
+        from lottery_code a
+                 left join lottery_template b on a.template_id = b.id
+        where a.del_flag = '0'
+          AND a.status = 0
+          AND a.`code` = #{code}
+    </select>
+
+    <update id="updateCountLottery">
+        update lottery_template set count=count-1 where id = (select template_id from lottery_code where code = #{code})
+    </update>
+
     <select id="selectCodeById" parameterType="Long" resultMap="LotteryCodeResult">
         select * from lottery_code u
         where u.id = #{id}

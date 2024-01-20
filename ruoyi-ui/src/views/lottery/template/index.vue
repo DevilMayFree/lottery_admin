@@ -320,7 +320,7 @@ export default {
         this.title = "添加中奖模板";
       });
     },
-    handleDetail(row){
+    handleDetail(row) {
       this.reset();
       const userId = row.id || this.ids;
       getTemplate(userId).then(response => {
@@ -343,7 +343,7 @@ export default {
     submitForm: function () {
       this.trueSubmit();
       if (this.form.id != undefined) {
-          this.trueSubmit();
+        this.trueSubmit();
       }
     },
     /** 删除按钮操作 */
@@ -362,23 +362,23 @@ export default {
       let rateSum = 0;
       let check = true;
 
-      for (let index in this.form.goods){
+      for (let index in this.form.goods) {
         const item = this.form.goods[index];
-        if(item.name === undefined){
-          check=false;
+        if (item.name === undefined) {
+          check = false;
           break;
         }
-        if(parseFloat(item.rate) > 0){
-          rateSum += parseFloat(item.rate);
+        if (parseFloat(item.rate) * 100 > 0) {
+          rateSum += parseFloat(item.rate) * 100;
         }
       }
 
-      if(!check){
+      if (!check) {
         this.$modal.msgError("奖品不能为空");
         return;
       }
 
-      if(rateSum !== 100){
+      if (rateSum !== 10000) {
         this.$modal.msgError("所有奖品的中奖概率合必须为100%");
         return;
       }
