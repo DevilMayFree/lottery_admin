@@ -2,33 +2,33 @@
   <div id="lottery">
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td class="lottery-unit lottery-unit-0"><img class="lottery-img" src="../../assets/lottery/gift0.jpg">
+        <td class="lottery-unit lottery-unit-0"><img v-if="loadView" class="lottery-img" :src="imageList[0].image">
           <div class="mask"></div>
         </td>
-        <td class="lottery-unit lottery-unit-1"><img class="lottery-img" src="../../assets/lottery/gift1.jpg">
+        <td class="lottery-unit lottery-unit-1"><img v-if="loadView" class="lottery-img" :src="imageList[1].image">
           <div class="mask"></div>
         </td>
-        <td class="lottery-unit lottery-unit-2"><img class="lottery-img" src="../../assets/lottery/gift2.jpg">
+        <td class="lottery-unit lottery-unit-2"><img v-if="loadView" class="lottery-img" :src="imageList[2].image">
           <div class="mask"></div>
         </td>
       </tr>
       <tr>
-        <td class="lottery-unit lottery-unit-7"><img class="lottery-img" src="../../assets/lottery/gift7.jpg">
+        <td class="lottery-unit lottery-unit-7"><img v-if="loadView" class="lottery-img" :src="imageList[7].image">
           <div class="mask"></div>
         </td>
         <td><a @click="startLottery"></a></td>
-        <td class="lottery-unit lottery-unit-3"><img class="lottery-img" src="../../assets/lottery/gift3.jpg">
+        <td class="lottery-unit lottery-unit-3"><img v-if="loadView" class="lottery-img" :src="imageList[3].image">
           <div class="mask"></div>
         </td>
       </tr>
       <tr>
-        <td class="lottery-unit lottery-unit-6"><img class="lottery-img" src="../../assets/lottery/gift6.jpg">
+        <td class="lottery-unit lottery-unit-6"><img v-if="loadView" class="lottery-img" :src="imageList[6].image">
           <div class="mask"></div>
         </td>
-        <td class="lottery-unit lottery-unit-5"><img class="lottery-img" src="../../assets/lottery/gift5.jpg">
+        <td class="lottery-unit lottery-unit-5"><img v-if="loadView" class="lottery-img" :src="imageList[5].image">
           <div class="mask"></div>
         </td>
-        <td class="lottery-unit lottery-unit-4"><img class="lottery-img" src="../../assets/lottery/gift4.jpg">
+        <td class="lottery-unit lottery-unit-4"><img v-if="loadView" class="lottery-img" :src="imageList[4].image">
           <div class="mask"></div>
         </td>
       </tr>
@@ -38,19 +38,28 @@
 
 <script>
 import $ from 'jquery';
+import {codeDetail, lotteryApi} from "@/api/lottery/play";
 
 export default {
   name: 'LotteryGrid',
   mounted() {
     this.lottery.init('lottery');
-
-
+    const that = this;
+    codeDetail("b12b252d794a47889b193531c359b808").then(response => {
+      console.log("response:", response)
+      if (response.data) {
+        that.imageList = response.data;
+        that.loadView = true;
+      }
+    })
 
   },
   data() {
     return {
+      loadView: false,
       click: false,
       playIndex: -1,
+      imageList: [],
       lottery: {
         index: -1,    //当前转动到哪个位置，起点位置
         count: 0,    //总共有多少个位置
@@ -91,7 +100,7 @@ export default {
     }
   },
   methods: {
-    roll() {
+    async roll() {
       const lottery = this.lottery;
       const roll = this.roll;
       lottery.times += 1;
@@ -101,12 +110,28 @@ export default {
         lottery.prize = -1;
         lottery.times = 0;
         this.click = false;
+
+        const that = this;
+
+        console.log('抽奖完  中奖的是:', this.imageList[this.playIndex])
+
+        console.log("lottery:",that.lottery)
+
+        that.lottery.index = -1;    //当前转动到哪个位置，起点位置
+
       } else {
         if (lottery.times < lottery.cycle) {
           lottery.speed -= 10;
         } else if (lottery.times == lottery.cycle) {
-          var index = Math.random() * (lottery.count) | 0;//中奖物品通过一个随机数生成
-          lottery.prize = index;
+          await lotteryApi("b12b252d794a47889b193531c359b808").then(response => {
+            if (response.index) {
+              this.playIndex = response.index;
+              lottery.prize = response.index;
+              // lottery.prize = 0;
+            }
+            console.log("api完")
+          })
+          console.log("设置完")
         } else {
           if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
             lottery.speed += 110;
@@ -127,6 +152,13 @@ export default {
       if (this.click) {//click控制一次抽奖过程中不能重复点击抽奖按钮，后面的点击不响应
         return false;
       } else {
+        const that = this;
+
+        const $lottery = $("#lottery");
+        $lottery.find(".lottery-unit-" + that.playIndex).removeClass("active");
+
+        that.playIndex = -1;
+
         this.lottery.speed = 100;
         this.roll();    //转圈过程不响应click事件，会将click置为false
         this.click = true; //一次抽奖完成后，设置click为true，可继续抽奖
