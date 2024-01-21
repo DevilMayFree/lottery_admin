@@ -54,6 +54,9 @@ public class PlayController extends BaseController {
 
         List<LotteryGoods> goodsInfoList = lotteryGoodsMapper.findGoodsInfoByCode(code.getCode());
 
+        // 使用了未中奖
+        lotteryCodeMapper.actionCodeDone(lotteryCode.getId(), 1);
+
         AjaxResult ajax = AjaxResult.success();
         ajax.put(AjaxResult.DATA_TAG,goodsInfoList);
         ajax.put("lotteryCount",count);
