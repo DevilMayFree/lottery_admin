@@ -89,7 +89,8 @@ public class PlayController extends BaseController {
             LotteryGoods draw = draw(rateList);
             if (draw != null) {
                 int i = goodsInfoRateList.indexOf(draw);
-                ajax.put("index", i);
+                 ajax.put("index", i);
+//                ajax.put("index", 0);
                 ajax.put("goods", draw);
             }
         }

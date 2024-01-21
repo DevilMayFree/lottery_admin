@@ -66,7 +66,7 @@ export default {
         timer: 0,    //setTimeout的ID，用clearTimeout清除
         speed: 20,    //初始转动速度
         times: 0,    //转动次数
-        cycle: 50,    //转动基本次数：即至少需要转动多少次再进入抽奖环节
+        cycle: 80,    //转动基本次数：即至少需要转动多少次再进入抽奖环节
         prize: -1,    //中奖位置
         init: function (id) {
           if ($("#" + id).find(".lottery-unit").length > 0) {
@@ -100,6 +100,16 @@ export default {
     }
   },
   methods: {
+    lotteryDone() {
+      const that = this;
+      console.log('抽奖完  中奖的是:', this.imageList[this.playIndex])
+
+      console.log("lottery:", that.lottery)
+
+      that.lottery.index = -1;    //当前转动到哪个位置，起点位置
+
+      this.$emit('lottery-done', this.imageList[this.playIndex]);
+    },
     async roll() {
       const lottery = this.lottery;
       const roll = this.roll;
@@ -111,29 +121,24 @@ export default {
         lottery.times = 0;
         this.click = false;
 
-        const that = this;
-
-        console.log('抽奖完  中奖的是:', this.imageList[this.playIndex])
-
-        console.log("lottery:",that.lottery)
-
-        that.lottery.index = -1;    //当前转动到哪个位置，起点位置
-
+        this.lotteryDone();
       } else {
+
         if (lottery.times < lottery.cycle) {
           lottery.speed -= 10;
         } else if (lottery.times == lottery.cycle) {
-          await lotteryApi("b12b252d794a47889b193531c359b808").then(response => {
-            if (response.index) {
-              this.playIndex = response.index;
-              lottery.prize = response.index;
-              // lottery.prize = 0;
+          lotteryApi("b12b252d794a47889b193531c359b808").then(response => {
+            if (response.index !=null && response.index !=undefined) {
+                this.playIndex = response.index;
+                lottery.prize = response.index;
             }
-            console.log("api完")
           })
-          console.log("设置完")
         } else {
-          if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
+          if (lottery.times > lottery.cycle + 10
+            // &&
+            // ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)
+          )
+          {
             lottery.speed += 110;
           } else {
             lottery.speed += 20;

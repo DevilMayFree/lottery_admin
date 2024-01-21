@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="font-size: 101.36px;">
     <div id="roll" style="display:block">
       <!-- <p class="time">3.10-3.25</p> -->
       <!--星星-->
@@ -17,7 +17,7 @@
         <p class="rule" style="display:block" @click="showMaskRule"></p>
         <p class="my" style="display:block" @click="showMaskMy"></p>
         <!--游戏区域-->
-        <div class="boxx">
+        <div class="boxx" id="booxxx">
           <span class="coin"></span>
           <!--          <h2>已有 <span>99</span> 人参与</h2>-->
           <ul class="light clearfix">
@@ -36,7 +36,7 @@
           </ul>
 
           <div class="play clearfix flex-fix-play">
-            <LotteryGrid />
+            <LotteryGrid @lottery-done="showMaskModel"/>
           </div>
 
         </div>
@@ -78,6 +78,12 @@
         <span id="close-my" @click="hiddenMaskMy"></span>
         <div class="con">
           <div class="text">
+            <div>
+              <h1>您的邀请码为:{{code}}</h1>
+            </div>
+            <div class="Detail" v-for="(item,index) in lotteryList">
+              <b style='color:#000'>奖品：{{item.name}}</b> <span style='color:gray; white-space:nowrap'>[]</span><br> <hr>
+            </div>
             <!--            <?php
                         $l = D('lottory',array('ip'=>sys_ip(),'order'=>'id desc','limit1'=>0,'limit2'=>20));
                         if(count($l)>0){?>
@@ -98,11 +104,30 @@
         </div>
       </div>
     </div>
+
+    <!--中奖提示-->
+    <div id="mask" ref="mask-model" :class="activeMaskModelClass? 'active':''  ">
+      <div class="blin"></div>
+      <div class="caidai"></div>
+      <div class="winning">
+<!--        <div class="red-head"></div>-->
+        <div>
+          <img style="height: 9rem;width: 8rem;" :src="lotteryImgSrc">
+        </div>
+<!--        <div class="red-body"></div>-->
+<!--        <div id="card">
+          <a href="" target="_self" class="win"></a>
+        </div>
+        <div class="btn"></div>-->
+        <span id="close" @click="hiddenMaskModel"></span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
+import $ from 'jquery';
 import {codeDetail} from "@/api/lottery/play";
 import LotteryGrid from "@/components/LotteryGrid"
 
@@ -111,11 +136,18 @@ export default {
   components:{
     LotteryGrid
   },
+  created() {
+    const urlParams = new URLSearchParams(window.location.search);
+    this.code = urlParams.get('code');
+  },
   data() {
     return {
+      code:'',
       activeClass: false,
       activeMyClass: false,
-
+      activeMaskModelClass: false,
+      lotteryImgSrc:'',
+      lotteryList:[],
     }
   },
   metaInfo() {
@@ -126,17 +158,85 @@ export default {
     }
   },
   mounted() {
-    /*codeDetail("b12b252d794a47889b193531c359b808").then(response => {
-      console.log("response:", response)
-    })*/
-
+    this.resetView();
   },
   methods: {
+    resetView(){
+      var innerWidth = window.innerWidth;
+      if(innerWidth < 325) {
+        $('html').css({
+          'font-size': '31.36px'
+        })
+        $('#booxxx').css({
+          'transform': 'scale(0.5)'
+        })
+      }
+
+      if(innerWidth >= 325 && innerWidth < 400) {
+        $('html').css({
+          'font-size': '38.36px'
+        })
+
+        $('#booxxx').css({
+          'transform': 'scale(0.6)'
+        })
+      }
+
+      if(innerWidth >= 400 && innerWidth < 600) {
+        $('html').css({
+          'font-size': '41.36px'
+        })
+
+        $('#booxxx').css({
+          'transform': 'scale(0.6)'
+        })
+      }
+
+      if(innerWidth > 600 && innerWidth <= 770){
+        $('html').css({
+          'font-size': '79.36px'
+        })
+
+        $('#booxxx').css({
+          'transform': 'scale(1.0)'
+        })
+      }
+
+      if(innerWidth > 770 && innerWidth <= 1024){
+        $('html').css({
+          'font-size': '92.36px'
+        })
+
+        $('#booxxx').css({
+          'transform': 'scale(1.0)'
+        })
+      }
+
+      if(innerWidth > 1024){
+        $('html').css({
+          'font-size': '101.36px'
+        })
+
+        $('#booxxx').css({
+          'transform': 'scale(1.0)'
+        })
+      }
+    },
     showMaskRule() {
       this.activeClass = true
     },
     showMaskMy() {
       this.activeMyClass = true
+    },
+    showMaskModel(target){
+      $('html').css({
+        'font-size': '401.36px'
+      })
+      console.log("接受:",target)
+      this.lotteryImgSrc=target.image;
+      target['lotteryTime'] = new Date();
+      this.lotteryList.push(target);
+      this.activeMaskModelClass = true;
     },
     hiddenMaskRule() {
       this.activeClass = false
@@ -144,6 +244,11 @@ export default {
     hiddenMaskMy() {
       this.activeMyClass = false
     },
+    hiddenMaskModel(){
+      this.resetView();
+      this.lotteryImgSrc='';
+      this.activeMaskModelClass = false
+    }
 
   },
 };
@@ -237,4 +342,5 @@ ul, li {
   justify-content: center;
   align-items: center;
 }
+
 </style>

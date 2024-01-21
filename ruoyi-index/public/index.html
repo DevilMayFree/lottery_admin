@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html style="font-size: 101.36px;">
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= webpackConfig.name %></title>
     <!--[if lt IE 11]><script>window.location.href='/html/ie.html';</script><![endif]-->
@@ -30,6 +30,18 @@
       width: 100%;
       height: 100%;
       z-index: 999999;
+    }
+
+    @media (max-width: 325px) {
+      html{
+        font-size: 31px;
+      }!important;
+    }
+
+    @media (max-width: 600px) {
+      html{
+        font-size: 101px;
+      }!important;
     }
 
     #loader {
