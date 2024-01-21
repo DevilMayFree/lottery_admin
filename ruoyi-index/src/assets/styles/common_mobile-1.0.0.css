@@ -108,6 +108,7 @@ input {
   height: inherit;
 }
 
+#code-rule,
 #mask-rule,
 #mask-my,
 #mask {
@@ -128,7 +129,23 @@ input {
   height: 70%;
   border-radius: 0.26666667rem;
 }
-#mask-rule .box-rule .star,#mask-my .box-my .star  {
+#code-rule .box-rule {
+  position: relative;
+  margin: 20% auto;
+  padding-top: 0.53333333rem;
+  width: 90%;
+  height: 15%;
+  border-radius: 0.26666667rem;
+
+  .el-button-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+}
+#code-rule .box-rule .star,#mask-rule .box-rule .star,#mask-my .box-my .star  {
   position: absolute;
   left: 50%;
   top: -1.33333333rem;
@@ -136,7 +153,7 @@ input {
   width: 3.45333333rem;
   height: 1.16rem;
 }
-#mask-rule .box-rule h2,#mask-my .box-my h2 {
+#code-rule .box-rule h2,#mask-rule .box-rule h2,#mask-my .box-my h2 {
   width: 100%;
   text-align: center;
   line-height: 0.45333333rem;
@@ -144,7 +161,10 @@ input {
   font-weight: normal;
   color: #fff;
 }
+
+#code-rule .box-rule h2::before,
 #mask-rule .box-rule h2::before,
+#code-rule .box-rule h2::after,
 #mask-rule .box-rule h2::after,
 #mask-my .box-my h2::before,
 #mask-my .box-my h2::after {
@@ -155,13 +175,13 @@ input {
   background-color: #fff;
   border-radius: 50%;
 }
-#mask-rule .box-rule h2::before,#mask-my .box-my h2::before {
+#code-rule .box-rule h2::before,#mask-rule .box-rule h2::before,#mask-my .box-my h2::before {
   margin-right: 0.32rem;
 }
-#mask-rule .box-rule h2::after,#mask-my .box-my h2::after {
+#code-rule .box-rule h2::after,#mask-rule .box-rule h2::after,#mask-my .box-my h2::after {
   margin-left: 0.32rem;
 }
-#mask-rule #close-rule,#mask-my #close-my {
+#code-rule #close-rule,#mask-rule #close-rule,#mask-my #close-my {
   position: absolute;
   right: 0.45333333rem;
   top: 0.50666667rem;
@@ -170,7 +190,7 @@ input {
   background-image: url("../image/close.png");
 }
 
-#mask-rule .con,#mask-my .con {
+#code-rule .con,#mask-rule .con,#mask-my .con {
   overflow: auto;
   position: relative;
   margin: 0.53333333rem auto;
@@ -181,7 +201,7 @@ input {
   font-size: 0.34666667rem;
   color: #fff;
 }
-#mask-rule .con .text,#mask-my .con .text {
+#code-rule .con .text,#mask-rule .con .text,#mask-my .con .text {
   position: absolute;
   top: 0;
   left: 0;

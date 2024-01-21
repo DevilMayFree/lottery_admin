@@ -37,23 +37,28 @@ public class PlayController extends BaseController {
     public AjaxResult codeDetail(@RequestBody LotteryCode code) {
 
         if (StringUtils.isBlank(code.getCode())) {
-            throw new IllegalArgumentException("请输入邀请码");
+            // throw new IllegalArgumentException("请输入邀请码");
+            return AjaxResult.warn("请输入邀请码");
         }
         LotteryCode lotteryCode = lotteryCodeMapper.findCodeByName(code.getCode());
 
         if (lotteryCode == null) {
-            throw new IllegalArgumentException("非法邀请码");
+            return AjaxResult.warn("非法邀请码");
         }
         // 可抽奖次数
         int count = lotteryCodeMapper.countLottery(code.getCode());
 
         if (count <= 0) {
-            throw new IllegalArgumentException("抽奖次数为0,无法继续抽奖");
+            return AjaxResult.warn("抽奖次数为0,无法继续抽奖");
         }
 
         List<LotteryGoods> goodsInfoList = lotteryGoodsMapper.findGoodsInfoByCode(code.getCode());
 
-        return AjaxResult.success(goodsInfoList);
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put(AjaxResult.DATA_TAG,goodsInfoList);
+        ajax.put("lotteryCount",count);
+
+        return ajax;
     }
 
     // 根据邀请码进行一次抽奖
@@ -61,12 +66,14 @@ public class PlayController extends BaseController {
     public AjaxResult lottery(@RequestBody LotteryCode code) {
 
         if (StringUtils.isBlank(code.getCode())) {
-            throw new IllegalArgumentException("请输入邀请码");
+//            throw new IllegalArgumentException("请输入邀请码");
+            return AjaxResult.warn("请输入邀请码");
         }
         LotteryCode lotteryCode = lotteryCodeMapper.findCodeByName(code.getCode());
 
         if (lotteryCode == null) {
-            throw new IllegalArgumentException("非法邀请码");
+//            throw new IllegalArgumentException("非法邀请码");
+            return AjaxResult.warn("非法邀请码");
         }
 
         AjaxResult ajax = AjaxResult.success();
@@ -75,7 +82,8 @@ public class PlayController extends BaseController {
             int count = lotteryCodeMapper.countLottery(code.getCode());
 
             if (count <= 0) {
-                throw new IllegalArgumentException("抽奖次数为0,无法继续抽奖");
+                // throw new IllegalArgumentException("抽奖次数为0,无法继续抽奖");
+                return AjaxResult.warn("抽奖次数为0,无法继续抽奖");
             }
 
             // 抽奖次数-1

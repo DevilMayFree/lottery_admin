@@ -42,14 +42,19 @@ import {codeDetail, lotteryApi} from "@/api/lottery/play";
 
 export default {
   name: 'LotteryGrid',
+  props:{
+    invalidCode: String,
+  },
   mounted() {
     this.lottery.init('lottery');
     const that = this;
-    codeDetail("b12b252d794a47889b193531c359b808").then(response => {
+    console.log('子页面 mounted code":',this.invalidCode)
+    codeDetail(this.newInvalidCode(this.invalidCode)).then(response => {
       console.log("response:", response)
       if (response.data) {
         that.imageList = response.data;
         that.loadView = true;
+        that.$emit('lottery-count', response.lotteryCount);
       }
     })
 
@@ -100,6 +105,19 @@ export default {
     }
   },
   methods: {
+    newInvalidCode(code){
+      let newInvalidCode = this.invalidCode;
+      if(this.invalidCode.indexOf("?code=") !== -1){
+        newInvalidCode = this.invalidCode.replace("?code=","");
+      }
+      return newInvalidCode;
+    },
+    updateCode(updateCode){
+      console.log("updateCode",updateCode);
+      if(updateCode != ''){
+        this.invalidCode = updateCode;
+      }
+    },
     lotteryDone() {
       const that = this;
       console.log('抽奖完  中奖的是:', this.imageList[this.playIndex])
@@ -127,7 +145,7 @@ export default {
         if (lottery.times < lottery.cycle) {
           lottery.speed -= 10;
         } else if (lottery.times == lottery.cycle) {
-          lotteryApi("b12b252d794a47889b193531c359b808").then(response => {
+          lotteryApi(this.newInvalidCode(this.invalidCode)).then(response => {
             if (response.index !=null && response.index !=undefined) {
                 this.playIndex = response.index;
                 lottery.prize = response.index;

@@ -266,6 +266,13 @@ body {
   background-image: url("../image/star1.png");
 }
 
+#code-rule .box-rule {
+  background-color: #f7b50b;
+}
+#code-rule .box-rule .star {
+  background-image: url("../image/star1.png");
+}
+
 #mask-my .box-my {
   background-color: #f7b50b;
 }
