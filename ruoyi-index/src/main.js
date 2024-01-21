@@ -3,11 +3,16 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 
 import Element from 'element-ui'
-import './assets/styles/element-variables.scss'
 
-import '@/assets/styles/index.scss' // global css
-import '@/assets/styles/ruoyi.scss' // ruoyi css
+// import '@/assets/styles/index.scss' // global css
+import '@/assets/styles/swiper.min.css' // global css
+import '@/assets/styles/common_mobile-1.0.0.css' // global css
+import '@/assets/styles/common.css' // global css
+import '@/assets/styles/animate.min.css' // global css
+import '@/assets/styles/index-1.0.0.css' // global css
+
 import App from './App'
+// import App2 from './App2'
 import { download } from '@/utils/request'
 
 import './assets/icons' // icon
@@ -28,6 +33,10 @@ Vue.prototype.handleTree = handleTree
 
 Vue.use(VueClipboard)
 Vue.use(VueMeta)
+
+// 完整加载
+import VueLuckyCanvas from '@lucky-canvas/vue'
+Vue.use(VueLuckyCanvas)
 
 /**
  * If you don't want to use mock-server

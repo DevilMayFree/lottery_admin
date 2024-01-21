@@ -14,7 +14,7 @@ export function codeDetail(code) {
 }
 
 // 抽奖
-export function lottery(code) {
+export function lotteryApi(code) {
   return request({
     url: '/lottery/play/lottery',
     data: {
