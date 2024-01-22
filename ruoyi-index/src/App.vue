@@ -70,24 +70,24 @@
     <div id="mask-rule" ref="mask-rule" :class="activeClass? 'active':''  ">
       <div class="box-rule">
         <span class="star"></span>
-        <h2>活动说明</h2>
+        <h2>活動說明</h2>
         <span id="close-rule" @click="hiddenMaskRule"></span>
         <div class="con">
           <div class="text">
-            活动规则： <br>
-            1、凭手气赢奖品！百分百中奖！ <br>
-            2、中奖后联系下方客服发送邀请码进行兑奖。 <br>
-            3、填写的姓名、电话和联系地址必须真实，否则奖品没办法寄送。 <br>
+            活動規則： <br>
+            1、憑手氣贏獎品！百分百中獎！ <br>
+            2、中獎後聯系下方客服發送邀請碼進行兌獎。 <br>
+            3、填寫的姓名、電話和聯系地址必須真實，否則獎品沒辦法寄送。 <br>
             <p>
               <br>
             </p>                       <br>
             <div id="times">
               <div>
-                剩余抽奖次数：<span id="curtimes5">{{ lotteryCountNum }}</span><br>
+                剩余抽獎次數：<span id="curtimes5">{{ lotteryCountNum }}</span><br>
               </div>
             </div>
             <hr class="hr0">
-            活动时间：<br>2024-08-08 08:00至2088-08-08 08:00 <br><br>
+            活動時間：<br>2024-08-08 08:00至2088-08-08 08:00 <br><br>
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@
     <div id="mask-my" ref="mask-my" :class="activeMyClass? 'active':''  ">
       <div class="box-my">
         <span class="star"></span>
-        <h2>中奖记录</h2>
+        <h2>中獎記錄</h2>
         <span id="close-my" @click="hiddenMaskMy"></span>
         <div class="con">
           <div class="text">
@@ -106,7 +106,7 @@
                 {{ code }}</h4>
             </div>
             <div class="Detail" v-for="(item,index) in lotteryList">
-              <b style='color:#000'>奖品：{{ item.name }}</b> <span
+              <b style='color:#000'>獎品：{{ item.name }}</b> <span
               style='color:gray; white-space:nowrap'>[{{ item.lotteryTime }}]</span><br>
               <hr>
             </div>

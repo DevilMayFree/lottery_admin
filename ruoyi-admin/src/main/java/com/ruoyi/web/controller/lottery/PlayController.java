@@ -46,9 +46,9 @@ public class PlayController extends BaseController {
             return AjaxResult.warn("非法邀请码");
         }
         // 可抽奖次数
-        int count = lotteryCodeMapper.countLottery(code.getCode());
+        Integer count = lotteryCodeMapper.countLottery(code.getCode());
 
-        if (count <= 0) {
+        if (count == null || count <= 0) {
             return AjaxResult.warn("抽奖次数为0,无法继续抽奖");
         }
 
@@ -82,9 +82,9 @@ public class PlayController extends BaseController {
         AjaxResult ajax = AjaxResult.success();
         synchronized (this) {
             // 可抽奖次数
-            int count = lotteryCodeMapper.countLottery(code.getCode());
+            Integer count = lotteryCodeMapper.countLottery(code.getCode());
 
-            if (count <= 0) {
+            if (count == null || count <= 0) {
                 // throw new IllegalArgumentException("抽奖次数为0,无法继续抽奖");
                 return AjaxResult.warn("抽奖次数为0,无法继续抽奖");
             }

@@ -10,15 +10,15 @@ public interface LotteryCodeMapper {
 
     LotteryCode findCodeByName(String name);
 
-    int countLottery(String code);
+    Integer countLottery(String code);
 
-    int updateCountLottery(String code);
+    Integer updateCountLottery(String code);
 
-    int insertCode(LotteryCode code);
+    Integer insertCode(LotteryCode code);
 
-    int actionCodeDone(@Param("id") Long id, @Param("status") Integer status);
+    Integer actionCodeDone(@Param("id") Long id, @Param("status") Integer status);
 
     LotteryCode selectCodeById(Long id);
 
-    int deleteCodeByIds(Long[] ids);
+    Integer deleteCodeByIds(Long[] ids);
 }
