@@ -35,10 +35,6 @@ Vue.prototype.handleTree = handleTree
 Vue.use(VueClipboard)
 Vue.use(VueMeta)
 
-// 完整加载
-import VueLuckyCanvas from '@lucky-canvas/vue'
-Vue.use(VueLuckyCanvas)
-
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
