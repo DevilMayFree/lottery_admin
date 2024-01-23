@@ -2,33 +2,33 @@
   <div id="lottery">
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td class="lottery-unit lottery-unit-0"><img v-if="loadView" class="lottery-img" :src="imageList[0].image">
+        <td class="lottery-unit lottery-unit-0"><img v-if="loadView" class="lottery-img" :src=" imageList[0].image">
           <div class="mask"></div>
         </td>
-        <td class="lottery-unit lottery-unit-1"><img v-if="loadView" class="lottery-img" :src="imageList[1].image">
+        <td class="lottery-unit lottery-unit-1"><img v-if="loadView" class="lottery-img" :src=" imageList[1].image">
           <div class="mask"></div>
         </td>
-        <td class="lottery-unit lottery-unit-2"><img v-if="loadView" class="lottery-img" :src="imageList[2].image">
+        <td class="lottery-unit lottery-unit-2"><img v-if="loadView" class="lottery-img" :src=" imageList[2].image">
           <div class="mask"></div>
         </td>
       </tr>
       <tr>
-        <td class="lottery-unit lottery-unit-7"><img v-if="loadView" class="lottery-img" :src="imageList[7].image">
+        <td class="lottery-unit lottery-unit-7"><img v-if="loadView" class="lottery-img" :src=" imageList[7].image">
           <div class="mask"></div>
         </td>
         <td><a @click="startLottery"></a></td>
-        <td class="lottery-unit lottery-unit-3"><img v-if="loadView" class="lottery-img" :src="imageList[3].image">
+        <td class="lottery-unit lottery-unit-3"><img v-if="loadView" class="lottery-img" :src=" imageList[3].image">
           <div class="mask"></div>
         </td>
       </tr>
       <tr>
-        <td class="lottery-unit lottery-unit-6"><img v-if="loadView" class="lottery-img" :src="imageList[6].image">
+        <td class="lottery-unit lottery-unit-6"><img v-if="loadView" class="lottery-img" :src=" imageList[6].image">
           <div class="mask"></div>
         </td>
-        <td class="lottery-unit lottery-unit-5"><img v-if="loadView" class="lottery-img" :src="imageList[5].image">
+        <td class="lottery-unit lottery-unit-5"><img v-if="loadView" class="lottery-img" :src=" imageList[5].image">
           <div class="mask"></div>
         </td>
-        <td class="lottery-unit lottery-unit-4"><img v-if="loadView" class="lottery-img" :src="imageList[4].image">
+        <td class="lottery-unit lottery-unit-4"><img v-if="loadView" class="lottery-img" :src=" imageList[4].image">
           <div class="mask"></div>
         </td>
       </tr>
