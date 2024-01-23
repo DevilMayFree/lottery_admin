@@ -37,8 +37,8 @@ public class PlayController extends BaseController {
     public AjaxResult codeDetail(@RequestBody LotteryCode code) {
 
         if (StringUtils.isBlank(code.getCode())) {
-            // throw new IllegalArgumentException("请输入邀请码");
-            return AjaxResult.warn("请输入邀请码");
+            // throw new IllegalArgumentException("請輸入邀請碼");
+            return AjaxResult.warn("請輸入邀請碼");
         }
         LotteryCode lotteryCode = lotteryCodeMapper.findCodeByName(code.getCode());
 
@@ -69,8 +69,8 @@ public class PlayController extends BaseController {
     public AjaxResult lottery(@RequestBody LotteryCode code) {
 
         if (StringUtils.isBlank(code.getCode())) {
-//            throw new IllegalArgumentException("请输入邀请码");
-            return AjaxResult.warn("请输入邀请码");
+//            throw new IllegalArgumentException("請輸入邀請碼");
+            return AjaxResult.warn("請輸入邀請碼");
         }
         LotteryCode lotteryCode = lotteryCodeMapper.findCodeByName(code.getCode());
 

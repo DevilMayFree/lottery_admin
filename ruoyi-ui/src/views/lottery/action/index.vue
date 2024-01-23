@@ -7,7 +7,7 @@
           <el-form-item label="邀请码" prop="userName">
             <el-input
               v-model="queryParams.userName"
-              placeholder="请输入邀请码"
+              placeholder="請輸入邀請碼"
               clearable
               style="width: 240px"
               @keyup.enter.native="handleQuery"
