@@ -47,11 +47,11 @@
     <div id="code-rule" ref="code-rule" :class="activeCodeClass? 'active':''  ">
       <div class="box-rule">
         <span class="star"></span>
-        <h2>请输入邀请码</h2>
+        <h2>請輸入邀請碼</h2>
         <!--        <span id="close-rule" @click="hiddenCodeRule"></span>-->
         <div class="con">
           <div class="text">
-            <el-input placeholder="请输入邀请码" v-model="code">
+            <el-input placeholder="請輸入邀請碼" v-model="code">
               <template slot="append">
                 <el-button type="primary" round @click="clickCode">确认</el-button>
               </template>
@@ -258,6 +258,12 @@ export default {
 
         $('#booxxx').css({
           'transform': 'scale(1.0)'
+        })
+
+        const x = innerWidth / 4 ;
+        $('body').css({
+          'margin-left': x+'px',
+          'margin-top': x+'px'
         })
       }
     },
