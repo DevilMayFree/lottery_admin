@@ -368,8 +368,9 @@ export default {
           check = false;
           break;
         }
-        if (parseFloat(item.rate) * 100 > 0) {
-          rateSum += parseFloat(item.rate) * 100;
+        item.rate = item.rate * 100;
+        if (parseFloat(item.rate) > 0) {
+          rateSum += parseFloat(item.rate);
         }
       }
 
