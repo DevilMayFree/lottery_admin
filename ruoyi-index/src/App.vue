@@ -43,6 +43,10 @@
       </div>
     </div>
 
+<!--    <div style="display:block">
+      <img src="./assets/image/bgg1.png" alt="" />
+    </div>-->
+
     <!--未携带邀请码弹窗-->
     <div id="code-rule" ref="code-rule" :class="activeCodeClass? 'active':''  ">
       <div class="box-rule">
