@@ -1,6 +1,6 @@
 @charset "utf-8";
 body {
-  background: url('../image/bg4.png') 0% 0% / 100% no-repeat rgb(255, 202, 0);
+  background: url('../image/bg4.png') 0% 0% / 100% no-repeat red;
   margin: 0px;
   padding: 0px;
 }

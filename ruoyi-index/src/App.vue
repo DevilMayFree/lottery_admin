@@ -80,8 +80,8 @@
           <div class="text">
             活動規則： <br>
             1、憑手氣贏獎品！百分百中獎！ <br>
-            2、中獎後聯系下方客服發送邀請碼進行兌獎。 <br>
-            3、填寫的姓名、電話和聯系地址必須真實，否則獎品沒辦法寄送。 <br>
+            2、中獎後請聯絡助理發送邀請碼進行兌獎！ <br>
+            3、請向助理提供您的姓名，收件電話，收件地址，獎品會於3-5個工作日內送達您的地址！<br>
             <p>
               <br>
             </p>                       <br>
@@ -91,7 +91,7 @@
               </div>
             </div>
             <hr class="hr0">
-            活動時間：<br>2024-08-08 08:00至2088-08-08 08:00 <br><br>
+            活動時間：<br>2024-01-29至2024-04-01<br><br>
           </div>
         </div>
       </div>
@@ -160,6 +160,7 @@
 import $ from 'jquery';
 import {codeDetail} from "@/api/lottery/play";
 import LotteryGrid from "@/components/LotteryGrid"
+import * as url from "url";
 
 export default {
   name: "App",
@@ -270,6 +271,16 @@ export default {
           'margin-top': x+'px'
         })
       }
+        // 创建一个 div 元素
+        var newDiv = $("<div></div>");
+
+        // 可以为 div 添加属性、样式和内容
+        newDiv.attr("id", "new-div")
+          .addClass("new-class")
+        ;
+
+        // 将新创建的 div 元素添加到指定的父元素中
+        $("body").append(newDiv);
     },
     showMaskRule() {
       this.activeClass = true
@@ -457,4 +468,8 @@ ul, li {
   align-items: center;
 }
 
+.new-class{
+  height: 15rem;
+  background:url(./assets/image/bgg2.png) 0% 0% / 100% no-repeat red;
+}
 </style>

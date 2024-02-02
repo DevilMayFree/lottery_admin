@@ -35,7 +35,7 @@ body {
   display: block;
   position: relative;
   margin: auto;
-  max-width: 10rem;
+  /*max-width: 10rem;*/
   min-width: 4.26666667rem;
   font-size: 0.16rem;
   font-family: "Microsoft Yahei", "Arial", sans-serif;
