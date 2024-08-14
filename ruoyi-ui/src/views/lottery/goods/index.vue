@@ -76,7 +76,8 @@
           <el-table-column label="数量" align="center" key="count" prop="count" :show-overflow-tooltip="true"/>
           <el-table-column label="预览" align="center" key="image" prop="image">
             <template slot-scope="scope">
-              <img :src="scope.row.image" style="height: 40px;width: 40px">
+              <img v-if="scope.row.image && scope.row.image.startsWith('https://')" :src="scope.row.image" style="height: 40px;width: 40px">
+              <img v-else :src="uploadUrl + scope.row.image" style="height: 40px;width: 40px">
             </template>
           </el-table-column>
           <el-table-column label="创建时间" align="center" prop="createTime" width="160">
@@ -203,6 +204,7 @@ export default {
   components: {Treeselect},
   data() {
     return {
+      uploadUrl: process.env.VUE_APP_BASE_API, // 图片服务器地址
       // 遮罩层
       loading: true,
       // 选中数组
