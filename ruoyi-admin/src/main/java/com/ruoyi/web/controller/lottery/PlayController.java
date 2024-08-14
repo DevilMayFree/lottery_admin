@@ -107,10 +107,8 @@ public class PlayController extends BaseController {
             LotteryGoods draw = draw(rateList);
 
             String redisKey = String.format(REDIS_KEY, code.getCode());
-            LocalDateTime now = LocalDateTime.now();
-            long unixTimestamp = now.toEpochSecond(ZoneOffset.UTC);
-            Boolean b = redisCache.zAdd(redisKey, 3600 * 24 * 7, draw, unixTimestamp);
-            if (draw != null && b) {
+            Long redisReturn = redisCache.lPush(redisKey, draw, 3600 * 24 * 7);
+            if (draw != null && redisReturn != null) {
                 int i = goodsInfoRateList.indexOf(draw);
                 ajax.put("index", i);
                 ajax.put("goods", draw);
@@ -149,12 +147,7 @@ public class PlayController extends BaseController {
         }
 
         String redisKey = String.format(REDIS_KEY, code.getCode());
-
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime aWeekStart = LocalDateTime.of(LocalDate.from(now.plusDays(-9)), LocalTime.MIN);
-        long startTimestamp = aWeekStart.toEpochSecond(ZoneOffset.UTC);
-        long endTimestamp = now.toEpochSecond(ZoneOffset.UTC);
-        Set<Object> objects = redisCache.rangeByScore(redisKey, startTimestamp, endTimestamp);
+        List<Object> objects = redisCache.rangeAll(redisKey);
         AjaxResult ajax = AjaxResult.success();
         ajax.put("list", objects);
         return ajax;

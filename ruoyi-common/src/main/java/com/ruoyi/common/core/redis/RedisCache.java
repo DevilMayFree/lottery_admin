@@ -261,4 +261,15 @@ public class RedisCache {
     public Set<Object> rangeByScore(String key, double min, double max) {
         return redisTemplate.opsForZSet().rangeByScore(key, min, max);
     }
+
+    public Long lPush(String key, Object value, long time) {
+        Long index = redisTemplate.opsForList().rightPush(key, value);
+        expire(key, time);
+        return index;
+    }
+
+    public List<Object> rangeAll(String key) {
+        return redisTemplate.opsForList().range(key, 0, -1);
+    }
+
 }
