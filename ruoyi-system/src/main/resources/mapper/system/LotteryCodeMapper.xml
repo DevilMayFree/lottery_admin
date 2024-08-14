@@ -34,7 +34,7 @@
           AND u.code = #{code} limit 1
     </select>
 
-    <select id="countLottery" parameterType="String">
+    <select id="countLottery" parameterType="String" resultType="integer">
         select b.count
         from lottery_code a
                  left join lottery_template b on a.template_id = b.id

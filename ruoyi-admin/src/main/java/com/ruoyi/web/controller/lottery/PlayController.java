@@ -37,7 +37,6 @@ public class PlayController extends BaseController {
     public AjaxResult codeDetail(@RequestBody LotteryCode code) {
 
         if (StringUtils.isBlank(code.getCode())) {
-            // throw new IllegalArgumentException("請輸入邀請碼");
             return AjaxResult.warn("請輸入邀請碼");
         }
         LotteryCode lotteryCode = lotteryCodeMapper.findCodeByName(code.getCode());
@@ -49,7 +48,7 @@ public class PlayController extends BaseController {
         Integer count = lotteryCodeMapper.countLottery(code.getCode());
 
         if (count == null || count <= 0) {
-            return AjaxResult.warn("抽奖次数为0,无法继续抽奖");
+            return AjaxResult.warn("抽獎次數為0,無法繼續抽獎");
         }
 
         List<LotteryGoods> goodsInfoList = lotteryGoodsMapper.findGoodsInfoByCode(code.getCode());
@@ -58,8 +57,8 @@ public class PlayController extends BaseController {
         lotteryCodeMapper.actionCodeDone(lotteryCode.getId(), 1);
 
         AjaxResult ajax = AjaxResult.success();
-        ajax.put(AjaxResult.DATA_TAG,goodsInfoList);
-        ajax.put("lotteryCount",count);
+        ajax.put(AjaxResult.DATA_TAG, goodsInfoList);
+        ajax.put("lotteryCount", count);
 
         return ajax;
     }
@@ -69,14 +68,12 @@ public class PlayController extends BaseController {
     public AjaxResult lottery(@RequestBody LotteryCode code) {
 
         if (StringUtils.isBlank(code.getCode())) {
-//            throw new IllegalArgumentException("請輸入邀請碼");
             return AjaxResult.warn("請輸入邀請碼");
         }
         LotteryCode lotteryCode = lotteryCodeMapper.findCodeByName(code.getCode());
 
         if (lotteryCode == null) {
-//            throw new IllegalArgumentException("非法邀请码");
-            return AjaxResult.warn("非法邀请码");
+            return AjaxResult.warn("非法邀請碼");
         }
 
         AjaxResult ajax = AjaxResult.success();
@@ -85,7 +82,6 @@ public class PlayController extends BaseController {
             Integer count = lotteryCodeMapper.countLottery(code.getCode());
 
             if (count == null || count <= 0) {
-                // throw new IllegalArgumentException("抽奖次数为0,无法继续抽奖");
                 return AjaxResult.warn("抽奖次数为0,无法继续抽奖");
             }
 
@@ -100,8 +96,7 @@ public class PlayController extends BaseController {
             LotteryGoods draw = draw(rateList);
             if (draw != null) {
                 int i = goodsInfoRateList.indexOf(draw);
-                 ajax.put("index", i);
-//                ajax.put("index", 0);
+                ajax.put("index", i);
                 ajax.put("goods", draw);
             }
         }
