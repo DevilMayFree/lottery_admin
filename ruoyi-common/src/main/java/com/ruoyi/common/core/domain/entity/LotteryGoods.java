@@ -2,6 +2,8 @@ package com.ruoyi.common.core.domain.entity;
 
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.util.Date;
+
 /**
  * 用户对象 sys_user
  * 
@@ -26,6 +28,8 @@ public class LotteryGoods extends BaseEntity
 
     // 抽奖概率
     private String rate;
+
+    private Date logTime;
 
     public LotteryGoods()
     {
@@ -86,6 +90,14 @@ public class LotteryGoods extends BaseEntity
 
     public void setRate(String rate) {
         this.rate = rate;
+    }
+
+    public Date getLogTime() {
+        return logTime;
+    }
+
+    public void setLogTime(Date logTime) {
+        this.logTime = logTime;
     }
 
     @Override

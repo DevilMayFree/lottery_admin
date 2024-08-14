@@ -21,7 +21,7 @@
 
         <el-table v-loading="loading" :data="dataList">
           <el-table-column label="编号" align="center" key="id" prop="id"/>
-          <el-table-column label="邀请码" align="center" key="code" prop="code" :show-overflow-tooltip="true"/>
+<!--          <el-table-column label="邀请码" align="center" key="code" prop="code" :show-overflow-tooltip="true"/>-->
           <el-table-column label="中奖商品名称" align="center" key="name" prop="name"
                            :show-overflow-tooltip="true"/>
           <el-table-column label="预览" align="center" key="image" prop="image">
@@ -30,9 +30,9 @@
               <img v-else :src="uploadUrl + scope.row.image" style="height: 40px;width: 40px">
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" width="160">
+          <el-table-column label="中奖时间" align="center" prop="createTime" width="160">
             <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
+              <span>{{ parseTime(scope.row.logTime) }}</span>
             </template>
           </el-table-column>
         </el-table>

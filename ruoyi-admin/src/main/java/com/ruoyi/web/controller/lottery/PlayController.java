@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.lottery;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.LotteryCode;
+import com.ruoyi.common.core.domain.entity.LotteryCodeAndGoods;
 import com.ruoyi.common.core.domain.entity.LotteryGoods;
 import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.common.utils.StringUtils;
@@ -14,13 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -105,10 +102,7 @@ public class PlayController extends BaseController {
                     .filter(i -> Float.parseFloat(i.getRate()) != 0F).collect(Collectors.toList());
 
             LotteryGoods draw = draw(rateList);
-
-            String redisKey = String.format(REDIS_KEY, code.getCode());
-            Long redisReturn = redisCache.lPush(redisKey, draw, 3600 * 24 * 7);
-            if (draw != null && redisReturn != null) {
+            if (draw != null) {
                 int i = goodsInfoRateList.indexOf(draw);
                 ajax.put("index", i);
                 ajax.put("goods", draw);
@@ -131,6 +125,24 @@ public class PlayController extends BaseController {
             }
         }
         return null;
+    }
+
+    // 根据邀请码进行一次抽奖
+    @PostMapping("/returnLottery")
+    public AjaxResult returnLottery(@RequestBody LotteryCodeAndGoods req) {
+
+        LotteryGoods goods = req.getGoods();
+        String code = req.getCode();
+        String redisKey = String.format(REDIS_KEY, code);
+        goods.setLogTime(new Date());
+        Long redisReturn = redisCache.lPush(redisKey, goods, 3600 * 24 * 7);
+
+        if (redisReturn == null) {
+            return AjaxResult.warn("抽獎記錄失敗");
+        }
+        LotteryCode lotteryCode = new LotteryCode();
+        lotteryCode.setCode(code);
+        return lottery(lotteryCode);
     }
 
 
