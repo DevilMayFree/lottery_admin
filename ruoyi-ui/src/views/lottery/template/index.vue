@@ -121,6 +121,7 @@ import {getUser} from "@/api/system/user";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import {getGoodsByName} from "@/api/lottery/goods";
 import {addTemplate, delTemplate, getTemplate, listTemplate, updateTemplate} from "@/api/lottery/template";
+import {deepClone} from "@/utils";
 
 export default {
   name: "User",
@@ -362,8 +363,10 @@ export default {
       let rateSum = 0;
       let check = true;
 
-      for (let index in this.form.goods) {
-        const item = this.form.goods[index];
+      let tempFrom = deepClone(this.form)
+
+      for (let index in tempFrom.goods) {
+        const item = tempFrom.goods[index];
         if (item.name === undefined) {
           check = false;
           break;
@@ -386,14 +389,14 @@ export default {
 
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id != undefined) {
-            updateTemplate(this.form).then(response => {
+          if (tempFrom.id != undefined) {
+            updateTemplate(tempFrom).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addTemplate(this.form).then(response => {
+            addTemplate(tempFrom).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
